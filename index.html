@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OptimuStock Perú</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="phone-frame">
+    <!-- Splash -->
+    <div class="splash" id="splash">
+      <img src="images/Logo.png" alt="OptimuStock Perú">
+      <h2>OptimuStock Perú</h2>
+      <p>Gestiona tu bodega, reduce mermas</p>
+    </div>
+
+    <!-- App -->
+    <div class="app-container" id="app">
+      <!-- Header -->
+      <header>
+        <img src="images/Logo.png" alt="Logo" class="logo">
+        <div>
+          <h1>OptimuStock</h1>
+          <span class="sub">Perú — Control de Inventario</span>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content" id="content">
+        <!-- SECCIÓN INICIO -->
+        <div class="section active" id="sec-inicio">
+          <div class="greeting" id="greeting">¡Hola, Don Carlos!</div>
+          <div class="card-grid" id="dashboard-cards">
+            <div class="card" onclick="navigateTo('ventas')">
+              <div class="icon icon-blue" data-lucide="trending-up"></div>
+              <div class="label">Ventas hoy</div>
+              <div class="value" id="ventas-hoy">—</div>
+              <svg class="sparkline-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline fill="none" stroke="#0047AB" stroke-width="2" points="0,25 20,18 40,22 60,8 80,14 100,5"/>
+              </svg>
+            </div>
+            <div class="card">
+              <div class="icon icon-green" data-lucide="wallet"></div>
+              <div class="label">Margen estimado</div>
+              <div class="value" id="margen-hoy">—</div>
+              <svg class="sparkline-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
+                <polyline fill="none" stroke="#16A34A" stroke-width="2" points="0,20 20,22 40,12 60,18 80,8 100,10"/>
+              </svg>
+            </div>
+            <div class="card" onclick="navigateTo('alertas')">
+              <div class="icon icon-red" data-lucide="clock"></div>
+              <div class="label">Por vencer</div>
+              <div class="value" id="por-vencer">—</div>
+              <div class="sub">Productos próximos a vencer</div>
+            </div>
+            <div class="card" onclick="navigateTo('recomendaciones')">
+              <div class="icon icon-orange" data-lucide="lightbulb"></div>
+              <div class="label">Sugerencias</div>
+              <div class="value" id="sugerencias">—</div>
+              <div class="sub">Recomendaciones activas</div>
+            </div>
+            <div class="card card-full">
+              <div class="icon icon-blue" data-lucide="package"></div>
+              <div class="label">Inventario total</div>
+              <div class="donut-container">
+                <svg width="60" height="60" viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="15.5" fill="none" stroke="#E5E7EB" stroke-width="3"/>
+                  <circle id="donut-stock" cx="18" cy="18" r="15.5" fill="none" stroke="#0047AB" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+                </svg>
+                <div>
+                  <div class="value" id="inventario-total">—</div>
+                  <div class="sub">Productos registrados</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN VENTAS -->
+        <div class="section" id="sec-ventas">
+          <div class="ventas-scroll">
+            <h2 class="section-title">Registrar Venta</h2>
+            <div class="search-box">
+              <i data-lucide="search"></i>
+              <input type="text" id="ventas-search" placeholder="Buscar producto..." oninput="buscarProducto(this.value)">
+            </div>
+            <div id="ventas-results" class="product-list"></div>
+          </div>
+          <div id="cart-container"></div>
+        </div>
+
+        <!-- SECCIÓN INVENTARIO -->
+        <div class="section" id="sec-inventario">
+          <h2 class="section-title">Inventario</h2>
+          <button class="add-btn" onclick="abrirModalProducto()">+ Agregar producto</button>
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" id="inventario-search" placeholder="Buscar en inventario..." oninput="filtrarInventario()">
+          </div>
+          <div class="chips" id="categoria-chips">
+            <button class="chip active" data-cat="" onclick="filtrarPorCategoria(this, '')">Todos</button>
+          </div>
+          <div id="inventario-lista"></div>
+        </div>
+
+        <!-- SECCIÓN ALERTAS -->
+        <div class="section" id="sec-alertas">
+          <h2 class="section-title">Alertas</h2>
+          <div class="alert-banner">
+            <i data-lucide="alert-triangle"></i>
+            <div class="alert-text">Tienes <strong id="alerta-count">0</strong> producto(s) por vencer</div>
+          </div>
+          <div id="alertas-lista"></div>
+        </div>
+
+        <!-- SECCIÓN RECOMENDACIONES -->
+        <div class="section" id="sec-recomendaciones">
+          <h2 class="section-title">Recomendaciones</h2>
+          <div class="info-text">Basado en tus ventas de las últimas 4 semanas</div>
+          <div id="recomendaciones-lista"></div>
+          <button class="btn btn-teal mt-12" id="btn-aceptar-rec" onclick="aceptarRecomendaciones()">
+            Aceptar sugerencias
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-section="inicio" onclick="navigateTo('inicio')">
+          <i data-lucide="home"></i>
+          <span>Inicio</span>
+        </button>
+        <button class="nav-item" data-section="ventas" onclick="navigateTo('ventas')">
+          <i data-lucide="shopping-cart"></i>
+          <span>Ventas</span>
+        </button>
+        <button class="nav-item" data-section="inventario" onclick="navigateTo('inventario')">
+          <i data-lucide="boxes"></i>
+          <span>Inventario</span>
+        </button>
+        <button class="nav-item" data-section="alertas" onclick="navigateTo('alertas')">
+          <i data-lucide="bell"></i>
+          <span>Alertas</span>
+        </button>
+        <button class="nav-item" data-section="recomendaciones" onclick="navigateTo('recomendaciones')">
+          <i data-lucide="sparkles"></i>
+          <span>Recomendac.</span>
+        </button>
+      </nav>
+
+      <!-- Modal Agregar Producto -->
+      <div class="modal-overlay" id="modal-producto">
+        <div class="modal-content">
+          <h3>Agregar producto</h3>
+          <label>Nombre del producto</label>
+          <input type="text" id="np-nombre" placeholder="Ej: Leche Gloria 1L">
+          <label>Categoría</label>
+          <select id="np-categoria"></select>
+          <label>Precio (S/)</label>
+          <input type="number" id="np-precio" placeholder="0.00" step="0.10" min="0">
+          <label>Stock actual</label>
+          <input type="number" id="np-stock" placeholder="0" min="0">
+          <label>Stock mínimo</label>
+          <input type="number" id="np-stock-min" placeholder="0" min="0">
+          <label>Fecha de vencimiento (opcional)</label>
+          <input type="date" id="np-vencimiento">
+          <div class="modal-actions">
+            <button class="btn btn-outline" onclick="cerrarModalProducto()">Cancelar</button>
+            <button class="btn btn-primary" onclick="guardarProducto()">Guardar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast -->
+      <div class="toast" id="toast"></div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

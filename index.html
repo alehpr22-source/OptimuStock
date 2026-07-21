@@ -21,17 +21,39 @@
       <!-- Header -->
       <header>
         <img src="images/Logo.png" alt="Logo" class="logo">
-        <div>
+        <div class="header-title">
           <h1>OptimuStock</h1>
           <span class="sub">Perú — Control de Inventario</span>
         </div>
+        <button class="header-logout" id="btn-logout" onclick="confirmarLogout()" title="Cerrar sesión">
+          <i data-lucide="log-out"></i>
+        </button>
       </header>
+
+      <!-- Login -->
+      <div class="section" id="sec-login">
+        <div class="login-box">
+          <img src="images/Logo.png" alt="OptimuStock Perú" class="login-logo">
+          <h2>Iniciar sesión</h2>
+          <p class="login-sub">Ingresa para gestionar tu bodega</p>
+          <div class="login-field">
+            <label>Correo electrónico</label>
+            <input type="email" id="login-email" placeholder="dueño@bodega.com" autocomplete="email">
+          </div>
+          <div class="login-field">
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" placeholder="******" autocomplete="current-password">
+          </div>
+          <button class="btn btn-primary" id="btn-login" onclick="login()">Ingresar</button>
+          <p class="login-error" id="login-error"></p>
+        </div>
+      </div>
 
       <!-- Content -->
       <div class="content" id="content">
         <!-- SECCIÓN INICIO -->
         <div class="section active" id="sec-inicio">
-          <div class="greeting" id="greeting">¡Hola, Don Carlos!</div>
+          <div class="greeting" id="greeting">¡Hola!</div>
           <div class="card-grid" id="dashboard-cards">
             <div class="card" onclick="navigateTo('ventas')">
               <div class="icon icon-blue" data-lucide="trending-up"></div>
@@ -78,17 +100,24 @@
           </div>
         </div>
 
-        <!-- SECCIÓN VENTAS -->
+        <!-- SECCIÓN VENTAS (carrito directo) -->
         <div class="section" id="sec-ventas">
           <div class="ventas-scroll">
             <h2 class="section-title">Registrar Venta</h2>
-            <div class="search-box">
+            <div class="search-box" style="position:relative">
               <i data-lucide="search"></i>
-              <input type="text" id="ventas-search" placeholder="Buscar producto..." oninput="buscarProducto(this.value)">
+              <input type="text" id="ventas-search" placeholder="Buscar y agregar producto..." oninput="buscarProducto(this.value)" autocomplete="off">
+              <div id="ventas-dropdown" class="search-dropdown"></div>
             </div>
-            <div id="ventas-results" class="product-list"></div>
+            <div id="carrito-lista"></div>
           </div>
-          <div id="cart-container"></div>
+          <div class="ventas-bottom-bar" id="ventas-bottom-bar" style="display:none">
+            <div class="vbb-info">
+              <span id="vbb-count">0 productos</span>
+              <strong id="vbb-total">S/ 0.00</strong>
+            </div>
+            <button class="btn btn-primary" id="vbb-guardar" onclick="guardarVenta()">Guardar venta</button>
+          </div>
         </div>
 
         <!-- SECCIÓN INVENTARIO -->
@@ -127,7 +156,7 @@
       </div>
 
       <!-- Bottom Nav -->
-      <nav class="bottom-nav">
+      <nav class="bottom-nav" id="bottom-nav">
         <button class="nav-item active" data-section="inicio" onclick="navigateTo('inicio')">
           <i data-lucide="home"></i>
           <span>Inicio</span>
@@ -173,11 +202,24 @@
         </div>
       </div>
 
+      <!-- Modal Confirmar Logout -->
+      <div class="modal-overlay" id="modal-logout">
+        <div class="modal-content" style="text-align:center">
+          <h3>Cerrar sesión</h3>
+          <p style="margin:12px 0;color:var(--text-light)">¿Estás seguro de cerrar sesión?</p>
+          <div class="modal-actions">
+            <button class="btn btn-outline" onclick="cerrarModalLogout()">Cancelar</button>
+            <button class="btn btn-danger" onclick="logout()">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Toast -->
       <div class="toast" id="toast"></div>
     </div>
   </div>
 
+  <script src="js/auth.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

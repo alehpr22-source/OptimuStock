@@ -346,6 +346,11 @@ header span.sub {
 
 .card-full {
   grid-column: 1 / -1;
+  padding: 20px;
+}
+
+.card-full .value {
+  font-size: 28px;
 }
 
 .icon-blue { background: #DBEAFE; }
@@ -378,8 +383,8 @@ header span.sub {
 .donut-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 4px;
+  gap: 16px;
+  margin-top: 6px;
 }
 
 .donut-container span {
@@ -390,13 +395,13 @@ header span.sub {
 .inv-stats {
   margin-left: auto;
   text-align: right;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-light);
-  line-height: 1.8;
+  line-height: 2;
 }
 .inv-stats span {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
 }
 .inv-stats div:first-child span { color: var(--brand-orange); }
 .inv-stats div:last-child span { color: var(--alert-red); }

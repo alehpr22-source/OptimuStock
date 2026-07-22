@@ -224,7 +224,7 @@ function renderCarrito() {
       '<div class="ci-info"><div class="ci-name">' + i.nombre + '</div><div class="ci-price">S/ ' + Number(i.precio).toFixed(2) + '</div></div>' +
       '<div class="ci-qty">' +
         '<button onclick="cambiarQtyCarrito(' + idx + ',-1)">−</button>' +
-        '<span class="ci-num">' + i.cantidad + '</span>' +
+        '<input type="number" class="ci-input" value="' + i.cantidad + '" min="1" max="' + i.stock_actual + '" onchange="actualizarQtyCarrito(' + idx + ',this.value)">' +
         '<button onclick="cambiarQtyCarrito(' + idx + ',1)">+</button>' +
       '</div>' +
       '<span class="ci-subtotal">S/ ' + subtotal.toFixed(2) + '</span>' +
@@ -240,6 +240,16 @@ function cambiarQtyCarrito(idx, delta) {
   if (!item) return
   var nueva = item.cantidad + delta
   if (nueva < 1 || nueva > item.stock_actual) return
+  item.cantidad = nueva
+  renderCarrito()
+}
+
+function actualizarQtyCarrito(idx, val) {
+  var item = carrito[idx]
+  if (!item) return
+  var nueva = parseInt(val)
+  if (isNaN(nueva) || nueva < 1) nueva = 1
+  if (nueva > item.stock_actual) nueva = item.stock_actual
   item.cantidad = nueva
   renderCarrito()
 }

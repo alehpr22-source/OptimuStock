@@ -746,6 +746,24 @@ header span.sub {
   text-align: center;
 }
 
+.carrito-item .ci-qty .ci-input {
+  width: 32px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 2px;
+  background: #fff;
+  outline: none;
+  -moz-appearance: textfield;
+}
+.carrito-item .ci-qty .ci-input::-webkit-outer-spin-button,
+.carrito-item .ci-qty .ci-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .carrito-item .ci-subtotal {
   font-size: 12px;
   font-weight: 700;

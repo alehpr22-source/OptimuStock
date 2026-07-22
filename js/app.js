@@ -116,7 +116,6 @@ async function cargarDashboard() {
       var ok = d.filter(function(p) { return p.estado_stock === 'OK' }).length
       var pct = Math.round(ok / d.length * 100)
       document.getElementById('donut-stock').setAttribute('stroke-dasharray', pct + ' ' + (100 - pct))
-      document.getElementById('donut-pct').textContent = pct + '%'
       document.getElementById('stock-bajo-count').textContent = d.length - ok
     }
   } catch (_) {}

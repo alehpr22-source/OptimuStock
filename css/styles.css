@@ -386,35 +386,26 @@ header span.sub {
   font-size: 13px;
   color: var(--text-light);
 }
-#donut-pct {
-  font-size: 13px;
-  color: var(--primary-blue);
-  font-weight: 600;
+
+.inv-stats {
+  margin-left: auto;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.8;
 }
+.inv-stats span {
+  font-weight: 700;
+  font-size: 14px;
+}
+.inv-stats div:first-child span { color: var(--brand-orange); }
+.inv-stats div:last-child span { color: var(--alert-red); }
 
 .sparkline-svg {
   width: 100%;
   height: 40px;
   margin-top: 6px;
 }
-
-.inv-stats {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-color);
-}
-.inv-stat {
-  font-size: 12px;
-  color: var(--text-light);
-}
-.inv-stat span {
-  font-weight: 700;
-  font-size: 14px;
-}
-.inv-stat-warn span { color: var(--brand-orange); }
-.inv-stat-danger span { color: var(--alert-red); }
 
 .chips {
   display: flex;

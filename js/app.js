@@ -172,8 +172,10 @@ function renderDropdown(productos) {
   var dropdown = document.getElementById('ventas-dropdown')
   if (!productos || !productos.length) { dropdown.classList.remove('open'); return }
   dropdown.innerHTML = productos.map(function(p) {
-    return '<div class="sd-item" onclick="agregarDesdeDropdown(\'' + p.id + '\',\'' + p.nombre.replace(/'/g, "\\'") + '\',' + p.precio + ',' + p.stock_actual + ')">' +
-      '<div class="sd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>' +
+    var icon = p.imagen_url
+      ? '<div class="sd-icon" style="overflow:hidden"><img src="' + p.imagen_url + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
+      : '<div class="sd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
+    return '<div class="sd-item" onclick="agregarDesdeDropdown(\'' + p.id + '\',\'' + p.nombre.replace(/'/g, "\\'") + '\',' + p.precio + ',' + p.stock_actual + ')">' + icon +
       '<div class="sd-info"><div class="sd-name">' + p.nombre + '</div><div class="sd-detail">S/ ' + Number(p.precio).toFixed(2) + ' · Stock: ' + p.stock_actual + '</div></div>' +
       '<span class="sd-add">+</span></div>'
   }).join('')
@@ -295,8 +297,10 @@ function renderInventario() {
 
   container.innerHTML = filtrados.map(function(p) {
     var esOk = p.estado_stock === 'OK'
-    return '<div class="product-item">' +
-      '<div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>' +
+    var thumb = p.imagen_url
+      ? '<div class="thumb"><img src="' + p.imagen_url + '" alt="' + p.nombre + '"></div>'
+      : '<div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
+    return '<div class="product-item">' + thumb +
       '<div class="info"><div class="name">' + p.nombre + '</div><div class="detail">' + (p.categoria_nombre || '') + ' · S/ ' + Number(p.precio).toFixed(2) + '</div></div>' +
       '<div class="stock-info"><div class="num">' + p.stock_actual + '</div><div class="min">min ' + p.stock_minimo + '</div><span class="badge ' + (esOk ? 'badge-ok' : 'badge-bajo') + '">' + (esOk ? 'OK' : 'Bajo') + '</span></div>' +
     '</div>'

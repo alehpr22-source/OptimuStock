@@ -495,6 +495,12 @@ header span.sub {
   stroke: var(--text-light);
 }
 
+.product-item .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .product-item .info {
   flex: 1;
   min-width: 0;
@@ -1054,6 +1060,15 @@ header span.sub {
   padding: 10px 14px;
   background: #F1F5F9;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.robot-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .mb-12 { margin-bottom: 12px; }

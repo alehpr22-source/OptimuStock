@@ -471,7 +471,7 @@ header span.sub {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: var(--bg);
+  background: var(--background-white);
   border-radius: 12px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
@@ -994,12 +994,11 @@ header span.sub {
   align-items: center;
   gap: 12px;
   padding: 14px;
-  background: var(--bg);
+  background: var(--background-white);
   border-radius: 12px;
   box-shadow: var(--shadow);
   cursor: pointer;
   border: 1px solid var(--border-color);
-  margin-bottom: 10px;
 }
 
 .recomendacion-item .ri-icon {
@@ -1223,7 +1222,7 @@ header span.sub {
 }
 .bs-stat {
   flex: 1;
-  background: var(--bg);
+  background: var(--background-white);
   border-radius: 10px;
   padding: 10px;
   text-align: center;

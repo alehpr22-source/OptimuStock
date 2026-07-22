@@ -210,9 +210,8 @@ header span.sub {
 }
 
 .login-logo {
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
+  width: 100px;
+  height: 100px;
   margin-bottom: 16px;
 }
 

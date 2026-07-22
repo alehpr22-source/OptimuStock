@@ -844,8 +844,8 @@ header span.sub {
   background: rgba(255,255,255,0.08);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.15);
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   border-radius: 8px;
   cursor: pointer;
@@ -861,8 +861,8 @@ header span.sub {
 }
 
 .ventas-bottom-bar .btn-cancel svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 /* === SEARCH DROPDOWN === */

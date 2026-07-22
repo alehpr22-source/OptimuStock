@@ -1,6 +1,13 @@
 -- Ejecutar en SQL Editor de Supabase Dashboard
 
 -- 1. Crear tabla que vincula usuarios auth con bodegas
+-- Columnas adicionales
+ALTER TABLE productos ADD COLUMN IF NOT EXISTS codigo_barras TEXT;
+ALTER TABLE productos ADD COLUMN IF NOT EXISTS unidad TEXT DEFAULT 'unidad';
+ALTER TABLE ventas ADD COLUMN IF NOT EXISTS metodo_pago TEXT DEFAULT 'efectivo';
+ALTER TABLE bodegas ADD COLUMN IF NOT EXISTS telefono TEXT;
+ALTER TABLE bodegas ADD COLUMN IF NOT EXISTS direccion TEXT;
+
 CREATE TABLE IF NOT EXISTS bodega_usuarios (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL UNIQUE,

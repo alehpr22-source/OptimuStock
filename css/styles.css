@@ -677,6 +677,12 @@ header span.sub {
   flex-shrink: 0;
 }
 
+.carrito-item .ci-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .carrito-item .ci-icon svg {
   width: 18px;
   height: 18px;
@@ -845,6 +851,12 @@ header span.sub {
   flex-shrink: 0;
 }
 
+.search-dropdown .sd-item .sd-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .search-dropdown .sd-item .sd-icon svg {
   width: 16px;
   height: 16px;
@@ -997,6 +1009,12 @@ header span.sub {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.recomendacion-item .ri-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .recomendacion-item .ri-icon svg {

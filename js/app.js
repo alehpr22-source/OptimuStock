@@ -172,17 +172,18 @@ function renderDropdown(productos) {
   var dropdown = document.getElementById('ventas-dropdown')
   if (!productos || !productos.length) { dropdown.classList.remove('open'); return }
   dropdown.innerHTML = productos.map(function(p) {
-    var icon = p.imagen_url
-      ? '<div class="sd-icon" style="overflow:hidden"><img src="' + p.imagen_url + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
+    var imgUrl = p.imagen_url || ''
+    var icon = imgUrl
+      ? '<div class="sd-icon" style="overflow:hidden"><img src="' + imgUrl + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
       : '<div class="sd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
-    return '<div class="sd-item" onclick="agregarDesdeDropdown(\'' + p.id + '\',\'' + p.nombre.replace(/'/g, "\\'") + '\',' + p.precio + ',' + p.stock_actual + ')">' + icon +
+    return '<div class="sd-item" onclick="agregarDesdeDropdown(\'' + p.id + '\',\'' + p.nombre.replace(/'/g, "\\'") + '\',' + p.precio + ',' + p.stock_actual + ',\'' + imgUrl + '\')">' + icon +
       '<div class="sd-info"><div class="sd-name">' + p.nombre + '</div><div class="sd-detail">S/ ' + Number(p.precio).toFixed(2) + ' · Stock: ' + p.stock_actual + '</div></div>' +
       '<span class="sd-add">+</span></div>'
   }).join('')
   dropdown.classList.add('open')
 }
 
-function agregarDesdeDropdown(id, nombre, precio, stock) {
+function agregarDesdeDropdown(id, nombre, precio, stock, imagenUrl) {
   document.getElementById('ventas-search').value = ''
   document.getElementById('ventas-dropdown').classList.remove('open')
   var existente = carrito.find(function(i) { return i.id === id })
@@ -190,7 +191,7 @@ function agregarDesdeDropdown(id, nombre, precio, stock) {
     if (existente.cantidad >= stock) { mostrarToast('Stock insuficiente', 'error'); renderCarrito(); return }
     existente.cantidad++
   } else {
-    carrito.push({ id: id, nombre: nombre, precio: Number(precio), cantidad: 1, stock_actual: stock })
+    carrito.push({ id: id, nombre: nombre, precio: Number(precio), cantidad: 1, stock_actual: stock, imagen_url: imagenUrl || '' })
   }
   renderCarrito()
   mostrarToast(nombre + ' agregado', 'success')
@@ -216,8 +217,10 @@ function renderCarrito() {
 
   container.innerHTML = carrito.map(function(i, idx) {
     var subtotal = i.cantidad * i.precio
-    return '<div class="carrito-item">' +
-      '<div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>' +
+    var icon = i.imagen_url
+      ? '<div class="ci-icon" style="overflow:hidden"><img src="' + i.imagen_url + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
+      : '<div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
+    return '<div class="carrito-item">' + icon +
       '<div class="ci-info"><div class="ci-name">' + i.nombre + '</div><div class="ci-price">S/ ' + Number(i.precio).toFixed(2) + '</div></div>' +
       '<div class="ci-qty">' +
         '<button onclick="cambiarQtyCarrito(' + idx + ',-1)">−</button>' +
@@ -406,7 +409,7 @@ async function cargarAlertas() {
 async function cargarRecomendaciones() {
   var items = []
   try {
-    items = await get('/recomendaciones?select=*,productos:producto_id(nombre)&vigente=eq.true&bodega_id=eq.' + getBodegaId())
+    items = await get('/recomendaciones?select=*,productos:producto_id(nombre,imagen_url)&vigente=eq.true&bodega_id=eq.' + getBodegaId())
   } catch (_) { items = [] }
 
   var container = document.getElementById('recomendaciones-lista')
@@ -421,8 +424,11 @@ async function cargarRecomendaciones() {
 
   btn.style.display = 'block'
   container.innerHTML = items.map(function(r) {
-    return '<div class="recomendacion-item">' +
-      '<div class="ri-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>' +
+    var imgUrl = r.productos?.imagen_url || ''
+    var icon = imgUrl
+      ? '<div class="ri-icon" style="overflow:hidden"><img src="' + imgUrl + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
+      : '<div class="ri-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>'
+    return '<div class="recomendacion-item">' + icon +
       '<div class="ri-info"><div class="ri-name">' + (r.productos?.nombre || 'Producto') + '</div><div class="ri-qty">Sugerido: ' + r.cantidad_sugerida + ' ' + r.unidad + '</div></div>' +
       '<div class="ri-badge">' + r.cantidad_sugerida + ' ' + r.unidad + '</div>' +
     '</div>'

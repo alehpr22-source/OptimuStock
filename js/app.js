@@ -397,6 +397,7 @@ async function cargarAlertas() {
   } catch (_) { items = [] }
   alertasData = items
   document.getElementById('alerta-count').textContent = items.length
+  document.getElementById('icon-alertas').classList.toggle('icon-alerta-active', items.length > 0)
 
   var container = document.getElementById('alertas-lista')
   container.className = 'product-list'
@@ -436,6 +437,7 @@ async function cargarRecomendaciones() {
     items = await get('/recomendaciones?select=*,productos:producto_id(nombre,imagen_url)&vigente=eq.true&bodega_id=eq.' + getBodegaId())
   } catch (_) { items = [] }
   recomendacionesData = items
+  document.getElementById('icon-recomendaciones').classList.toggle('icon-recomendacion-active', items.length > 0)
 
   var container = document.getElementById('recomendaciones-lista')
   var btn = document.getElementById('btn-aceptar-rec')

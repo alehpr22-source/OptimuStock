@@ -966,23 +966,33 @@ header span.sub {
   flex: 1;
 }
 
-/* === INVENTARIO ADD BUTTON === */
+/* === INVENTARIO HEADER === */
+
+.inventario-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.inventario-header .search-box {
+  flex: 1;
+  margin-bottom: 0;
+}
 
 .add-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  width: 100%;
-  padding: 12px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   border: 2px dashed var(--primary-blue);
-  border-radius: 12px;
+  border-radius: 10px;
   background: transparent;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--primary-blue);
   cursor: pointer;
-  margin-bottom: 12px;
+  flex-shrink: 0;
   transition: background 0.2s;
 }
 

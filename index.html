@@ -123,10 +123,12 @@
         <!-- SECCIÓN INVENTARIO -->
         <div class="section" id="sec-inventario">
           <h2 class="section-title">Inventario</h2>
-          <button class="add-btn" onclick="abrirModalProducto()">+ Agregar producto</button>
-          <div class="search-box">
-            <i data-lucide="search"></i>
-            <input type="text" id="inventario-search" placeholder="Buscar en inventario..." oninput="filtrarInventario()">
+          <div class="inventario-header">
+            <div class="search-box">
+              <i data-lucide="search"></i>
+              <input type="text" id="inventario-search" placeholder="Buscar en inventario..." oninput="filtrarInventario()">
+            </div>
+            <button class="add-btn" onclick="abrirModalProducto()">+</button>
           </div>
           <div class="chips" id="categoria-chips">
             <button class="chip active" data-cat="" onclick="filtrarPorCategoria(this, '')">Todos</button>

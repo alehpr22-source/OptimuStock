@@ -303,7 +303,7 @@ function renderInventario() {
     var thumb = p.imagen_url
       ? '<div class="thumb"><img src="' + p.imagen_url + '" alt="' + p.nombre + '"></div>'
       : '<div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
-    return '<div class="product-item">' + thumb +
+    return '<div class="product-item" onclick="abrirDetalle(\'inventario\',\'' + p.id + '\')">' + thumb +
       '<div class="info"><div class="name">' + p.nombre + '</div><div class="detail">' + (p.categoria_nombre || '') + ' · S/ ' + Number(p.precio).toFixed(2) + '</div></div>' +
       '<div class="stock-info"><div class="num">' + p.stock_actual + '</div><div class="min">min ' + p.stock_minimo + '</div><span class="badge ' + (esOk ? 'badge-ok' : 'badge-bajo') + '">' + (esOk ? 'OK' : 'Bajo') + '</span></div>' +
     '</div>'
@@ -371,11 +371,14 @@ async function guardarProducto() {
 
 // === ALERTAS ===
 
+var alertasData = []
+
 async function cargarAlertas() {
   var items = []
   try {
     items = await get('/vista_productos_por_vencer?select=*&bodega_id=eq.' + getBodegaId() + '&order=fecha_vencimiento.asc')
   } catch (_) { items = [] }
+  alertasData = items
   document.getElementById('alerta-count').textContent = items.length
 
   var container = document.getElementById('alertas-lista')
@@ -387,15 +390,17 @@ async function cargarAlertas() {
   }
 
   container.innerHTML = items.map(function(p) {
-    var fecha = new Date(p.fecha_vencimiento)
-    var hoy = new Date()
+    var partes = p.fecha_vencimiento.split('-')
+    var fecha = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]))
+    var ahora = new Date()
+    var hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate())
     var diff = Math.ceil((fecha - hoy) / (1000 * 60 * 60 * 24))
     var urgente = diff <= 2
     var thumb = p.imagen_url
       ? '<div class="thumb" style="overflow:hidden"><img src="' + p.imagen_url + '" alt="' + p.nombre + '" style="width:100%;height:100%;object-fit:cover"></div>'
       : '<div class="thumb" style="background:' + (urgente ? '#FEE2E2' : '#FEF3C7') + '">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="' + (urgente ? '#E24C4C' : '#F5A623') + '" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>'
-    return '<div class="product-item">' + thumb +
+    return '<div class="product-item" onclick="abrirDetalle(\'alerta\',\'' + p.id + '\')">' + thumb +
       '<div class="info"><div class="name">' + p.nombre + '</div>' +
         '<div class="detail" style="color:' + (urgente ? '#E24C4C' : '#F5A623') + ';font-weight:600">Vence: ' + fecha.toLocaleDateString('es-PE') + ' ' + (urgente ? '(URGENTE)' : '(en ' + diff + ' días)') + '</div></div>' +
       '<div class="stock-info"><div class="num">' + p.stock_actual + '</div><div class="min">Stock</div></div>' +
@@ -406,11 +411,14 @@ async function cargarAlertas() {
 
 // === RECOMENDACIONES ===
 
+var recomendacionesData = []
+
 async function cargarRecomendaciones() {
   var items = []
   try {
     items = await get('/recomendaciones?select=*,productos:producto_id(nombre,imagen_url)&vigente=eq.true&bodega_id=eq.' + getBodegaId())
   } catch (_) { items = [] }
+  recomendacionesData = items
 
   var container = document.getElementById('recomendaciones-lista')
   var btn = document.getElementById('btn-aceptar-rec')
@@ -428,7 +436,7 @@ async function cargarRecomendaciones() {
     var icon = imgUrl
       ? '<div class="ri-icon" style="overflow:hidden"><img src="' + imgUrl + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
       : '<div class="ri-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>'
-    return '<div class="recomendacion-item">' + icon +
+    return '<div class="recomendacion-item" onclick="abrirDetalle(\'recomendacion\',\'' + r.id + '\')">' + icon +
       '<div class="ri-info"><div class="ri-name">' + (r.productos?.nombre || 'Producto') + '</div><div class="ri-qty">Sugerido: ' + r.cantidad_sugerida + ' ' + r.unidad + '</div></div>' +
       '<div class="ri-badge">' + r.cantidad_sugerida + ' ' + r.unidad + '</div>' +
     '</div>'
@@ -471,3 +479,119 @@ document.addEventListener('keydown', function(e) {
     }
   }
 })
+
+// === BOTTOM SHEET DETALLE ===
+
+function abrirDetalle(tipo, id) {
+  var overlay = document.getElementById('detail-overlay')
+  var sheet = document.getElementById('detail-sheet')
+  var body = document.getElementById('detail-body')
+
+  var data = []
+  if (tipo === 'inventario') {
+    data = inventarioData.filter(function(p) { return p.id === id })
+    if (!data.length && alertasData) data = alertasData.filter(function(p) { return p.id === id })
+  } else if (tipo === 'alerta') {
+    data = alertasData ? alertasData.filter(function(p) { return p.id === id }) : []
+    if (!data.length) data = inventarioData.filter(function(p) { return p.id === id })
+  } else if (tipo === 'recomendacion') {
+    data = recomendacionesData ? recomendacionesData.filter(function(r) { return r.id === id }) : []
+  }
+
+  var item = data[0]
+  if (!item) { mostrarToast('No se encontró el producto', 'error'); return }
+
+  var html = ''
+
+  if (tipo === 'inventario') {
+    html = renderDetalleInventario(item)
+  } else if (tipo === 'alerta') {
+    html = renderDetalleAlerta(item)
+  } else if (tipo === 'recomendacion') {
+    html = renderDetalleRecomendacion(item)
+  }
+
+  body.innerHTML = html
+  overlay.classList.add('open')
+  sheet.classList.add('open')
+}
+
+function renderDetalleInventario(p) {
+  var img = p.imagen_url
+    ? '<img class="bs-img" src="' + p.imagen_url + '" alt="' + p.nombre + '">'
+    : '<div class="bs-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
+  return img +
+    '<div class="bs-title">' + p.nombre + '</div>' +
+    '<div class="bs-sub">' + (p.categoria_nombre || 'Sin categoría') + ' · S/ ' + Number(p.precio).toFixed(2) + '</div>' +
+    '<div class="bs-stats">' +
+      '<div class="bs-stat"><div class="bs-stat-val">' + p.stock_actual + '</div><div class="bs-stat-label">Stock</div></div>' +
+      '<div class="bs-stat"><div class="bs-stat-val">' + p.stock_minimo + '</div><div class="bs-stat-label">Mínimo</div></div>' +
+    '</div>' +
+    '<div class="bs-divider"></div>' +
+    '<button class="bs-btn bs-btn-primary" onclick="cerrarDetalle()">Editar producto</button>'
+}
+
+function renderDetalleAlerta(p) {
+  var partes = p.fecha_vencimiento.split('-')
+  var fecha = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]))
+  var ahora = new Date()
+  var hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate())
+  var diff = Math.ceil((fecha - hoy) / (1000 * 60 * 60 * 24))
+  var vencido = diff <= 0
+
+  var img = p.imagen_url
+    ? '<img class="bs-img" src="' + p.imagen_url + '" alt="' + p.nombre + '">'
+    : '<div class="bs-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>'
+  return img +
+    '<div class="bs-title">' + p.nombre + '</div>' +
+    '<div class="bs-sub">Vence: ' + fecha.toLocaleDateString('es-PE') + '</div>' +
+    '<div class="bs-stats">' +
+      '<div class="bs-stat"><div class="bs-stat-val">' + p.stock_actual + '</div><div class="bs-stat-label">Stock</div></div>' +
+      '<div class="bs-stat"><div class="bs-stat-val">' + (vencido ? 'Vencido' : (diff === 1 ? 'Mañana' : diff + ' días')) + '</div><div class="bs-stat-label">' + (vencido ? '⚠' : 'Restante') + '</div></div>' +
+    '</div>' +
+    '<div class="bs-divider"></div>' +
+    '<div class="bs-detail-text">' + (vencido
+      ? 'Este producto ha vencido. Puedes descartarlo como merma para liberar el inventario.'
+      : 'Este producto vencerá pronto. Considera aplicar descuento o liquidación.') + '</div>' +
+    '<button class="bs-btn bs-btn-danger" onclick="marcarMerma(\'' + p.id + '\')">' + (vencido ? 'Marcar como merma' : 'Marcar como descartado / merma') + '</button>'
+}
+
+function renderDetalleRecomendacion(r) {
+  var img = r.productos?.imagen_url
+    ? '<img class="bs-img" src="' + r.productos.imagen_url + '" alt="' + r.productos.nombre + '">'
+    : '<div class="bs-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>'
+  return img +
+    '<div class="bs-title">' + (r.productos?.nombre || 'Producto') + '</div>' +
+    '<div class="bs-sub">Sugerido: ' + r.cantidad_sugerida + ' ' + r.unidad + '</div>' +
+    '<div class="bs-stats">' +
+      '<div class="bs-stat"><div class="bs-stat-val">' + r.cantidad_sugerida + '</div><div class="bs-stat-label">Cant. sugerida</div></div>' +
+      '<div class="bs-stat"><div class="bs-stat-val">' + (r.unidad || 'unidad') + '</div><div class="bs-stat-label">Unidad</div></div>' +
+    '</div>' +
+    '<div class="bs-divider"></div>' +
+    '<div class="bs-detail-text">Recomendación basada en tus ventas de las últimas 4 semanas. Reponer a tiempo evita quiebres de stock.</div>' +
+    '<button class="bs-btn bs-btn-primary" onclick="cerrarDetalle()">Aceptar y agregar al carrito</button>'
+}
+
+function marcarMerma(id) {
+  if (!confirm('¿Descartar este producto como merma?')) return
+  // Descontar stock a 0
+  var bodyData = JSON.stringify({ stock_actual: 0 })
+  fetch(SUPABASE_URL + '/rest/v1/productos?id=eq.' + id, {
+    method: 'PATCH',
+    headers: getAuthHeaders(),
+    body: bodyData
+  }).then(function(r) {
+    if (!r.ok) throw new Error()
+    mostrarToast('Producto marcado como merma', 'success')
+    cerrarDetalle()
+    cargarInventario()
+    if (window.cargarAlertas) cargarAlertas()
+  }).catch(function() {
+    mostrarToast('Error al marcar merma', 'error')
+  })
+}
+
+function cerrarDetalle() {
+  document.getElementById('detail-overlay').classList.remove('open')
+  document.getElementById('detail-sheet').classList.remove('open')
+}

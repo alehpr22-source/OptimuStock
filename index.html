@@ -55,35 +55,35 @@
         <div class="section active" id="sec-inicio">
           <div class="greeting" id="greeting">¡Hola!</div>
           <div class="card-grid" id="dashboard-cards">
-            <div class="card" onclick="navigateTo('ventas')">
+            <div class="card card-accent-blue" onclick="navigateTo('ventas')">
               <div class="icon icon-blue" data-lucide="trending-up"></div>
               <div class="label">Ventas hoy</div>
-              <div class="value" id="ventas-hoy">—</div>
+              <div class="value val-blue" id="ventas-hoy">—</div>
               <svg class="sparkline-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
                 <polyline fill="none" stroke="#1E3A5F" stroke-width="2" points="0,25 20,18 40,22 60,8 80,14 100,5"/>
               </svg>
             </div>
-            <div class="card">
+            <div class="card card-accent-green">
               <div class="icon icon-green" data-lucide="wallet"></div>
               <div class="label">Margen estimado</div>
-              <div class="value" id="margen-hoy">—</div>
+              <div class="value val-green" id="margen-hoy">—</div>
               <svg class="sparkline-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
                 <polyline fill="none" stroke="#2FA88C" stroke-width="2" points="0,20 20,22 40,12 60,18 80,8 100,10"/>
               </svg>
             </div>
-            <div class="card" onclick="navigateTo('alertas')">
+            <div class="card card-accent-red" onclick="navigateTo('alertas')">
               <div class="icon icon-red" data-lucide="clock"></div>
               <div class="label">Por vencer</div>
-              <div class="value" id="por-vencer">—</div>
+              <div class="value val-red" id="por-vencer">—</div>
               <div class="sub">Productos próximos a vencer</div>
             </div>
-            <div class="card" onclick="navigateTo('recomendaciones')">
+            <div class="card card-accent-orange" onclick="navigateTo('recomendaciones')">
               <div class="icon icon-orange" data-lucide="lightbulb"></div>
               <div class="label">Sugerencias</div>
-              <div class="value" id="sugerencias">—</div>
+              <div class="value val-orange" id="sugerencias">—</div>
               <div class="sub">Recomendaciones activas</div>
             </div>
-            <div class="card card-full">
+            <div class="card card-full card-accent-blue">
               <div class="icon icon-blue" data-lucide="package"></div>
               <div class="label">Inventario total</div>
               <div class="donut-container">
@@ -92,7 +92,7 @@
                   <circle id="donut-stock" cx="18" cy="18" r="15.5" fill="none" stroke="#1E3A5F" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)"/>
                 </svg>
                 <div>
-                  <div class="value" id="inventario-total">—</div>
+                  <div class="value val-blue" id="inventario-total">—</div>
                   <div class="sub">Productos registrados</div>
                 </div>
               </div>

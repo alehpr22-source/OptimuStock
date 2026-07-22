@@ -290,7 +290,12 @@ header span.sub {
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: transform 0.15s;
+  border-top: 3px solid transparent;
 }
+.card-accent-blue { border-top-color: var(--primary-blue); }
+.card-accent-green { border-top-color: var(--brand-teal); }
+.card-accent-red { border-top-color: var(--alert-red); }
+.card-accent-orange { border-top-color: var(--brand-orange); }
 
 .card:active {
   transform: scale(0.97);
@@ -321,6 +326,11 @@ header span.sub {
   font-size: 20px;
   font-weight: 700;
 }
+
+.card .value.val-blue { color: var(--primary-blue); }
+.card .value.val-green { color: var(--brand-teal); }
+.card .value.val-red { color: var(--alert-red); }
+.card .value.val-orange { color: var(--brand-orange); }
 
 .card .value small {
   font-size: 12px;

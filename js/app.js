@@ -388,9 +388,11 @@ async function cargarAlertas() {
     var hoy = new Date()
     var diff = Math.ceil((fecha - hoy) / (1000 * 60 * 60 * 24))
     var urgente = diff <= 2
-    return '<div class="product-item">' +
-      '<div class="thumb" style="background:' + (urgente ? '#FEE2E2' : '#FEF3C7') + '">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="' + (urgente ? '#E24C4C' : '#F5A623') + '" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>' +
+    var thumb = p.imagen_url
+      ? '<div class="thumb" style="overflow:hidden"><img src="' + p.imagen_url + '" alt="' + p.nombre + '" style="width:100%;height:100%;object-fit:cover"></div>'
+      : '<div class="thumb" style="background:' + (urgente ? '#FEE2E2' : '#FEF3C7') + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="' + (urgente ? '#E24C4C' : '#F5A623') + '" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>'
+    return '<div class="product-item">' + thumb +
       '<div class="info"><div class="name">' + p.nombre + '</div>' +
         '<div class="detail" style="color:' + (urgente ? '#E24C4C' : '#F5A623') + ';font-weight:600">Vence: ' + fecha.toLocaleDateString('es-PE') + ' ' + (urgente ? '(URGENTE)' : '(en ' + diff + ' días)') + '</div></div>' +
       '<div class="stock-info"><div class="num">' + p.stock_actual + '</div><div class="min">Stock</div></div>' +

@@ -483,6 +483,7 @@ header span.sub {
   height: 56px;
   border-radius: 10px;
   background: #fff;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -672,6 +673,7 @@ header span.sub {
   height: 44px;
   border-radius: 8px;
   background: #fff;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -846,6 +848,7 @@ header span.sub {
   height: 40px;
   border-radius: 8px;
   background: #fff;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1006,6 +1009,7 @@ header span.sub {
   height: 48px;
   border-radius: 10px;
   background: #fff;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1186,6 +1190,7 @@ header span.sub {
   border-radius: 12px;
   object-fit: contain;
   background: #fff;
+  border: 1px solid var(--border-color);
   margin-bottom: 12px;
 }
 .bs-img-placeholder {
@@ -1193,6 +1198,7 @@ header span.sub {
   height: 120px;
   border-radius: 12px;
   background: #fff;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;

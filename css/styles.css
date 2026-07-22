@@ -833,6 +833,13 @@ header span.sub {
   gap: 12px;
 }
 
+.ventas-bottom-bar .btn {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
 .ventas-bottom-bar .btn-cancel {
   background: rgba(255,255,255,0.08);
   color: #fff;
@@ -856,13 +863,6 @@ header span.sub {
 .ventas-bottom-bar .btn-cancel svg {
   width: 16px;
   height: 16px;
-}
-
-.ventas-bottom-bar .btn {
-  flex: 1;
-  padding: 12px 20px;
-  font-size: 15px;
-  font-weight: 700;
 }
 
 /* === SEARCH DROPDOWN === */

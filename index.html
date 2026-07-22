@@ -60,7 +60,7 @@
               <div class="label">Ventas hoy</div>
               <div class="value" id="ventas-hoy">—</div>
               <svg class="sparkline-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
-                <polyline fill="none" stroke="#0047AB" stroke-width="2" points="0,25 20,18 40,22 60,8 80,14 100,5"/>
+                <polyline fill="none" stroke="#1E3A5F" stroke-width="2" points="0,25 20,18 40,22 60,8 80,14 100,5"/>
               </svg>
             </div>
             <div class="card">
@@ -68,7 +68,7 @@
               <div class="label">Margen estimado</div>
               <div class="value" id="margen-hoy">—</div>
               <svg class="sparkline-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
-                <polyline fill="none" stroke="#16A34A" stroke-width="2" points="0,20 20,22 40,12 60,18 80,8 100,10"/>
+                <polyline fill="none" stroke="#2FA88C" stroke-width="2" points="0,20 20,22 40,12 60,18 80,8 100,10"/>
               </svg>
             </div>
             <div class="card" onclick="navigateTo('alertas')">
@@ -88,8 +88,8 @@
               <div class="label">Inventario total</div>
               <div class="donut-container">
                 <svg width="60" height="60" viewBox="0 0 36 36">
-                  <circle cx="18" cy="18" r="15.5" fill="none" stroke="#E5E7EB" stroke-width="3"/>
-                  <circle id="donut-stock" cx="18" cy="18" r="15.5" fill="none" stroke="#0047AB" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+                  <circle cx="18" cy="18" r="15.5" fill="none" stroke="#E2E8F0" stroke-width="3"/>
+                  <circle id="donut-stock" cx="18" cy="18" r="15.5" fill="none" stroke="#1E3A5F" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)"/>
                 </svg>
                 <div>
                   <div class="value" id="inventario-total">—</div>
@@ -149,7 +149,7 @@
           <h2 class="section-title">Recomendaciones</h2>
           <div class="info-text">Basado en tus ventas de las últimas 4 semanas</div>
           <div id="recomendaciones-lista"></div>
-          <button class="btn btn-teal mt-12" id="btn-aceptar-rec" onclick="aceptarRecomendaciones()">
+          <button class="btn btn-warning mt-12" id="btn-aceptar-rec" onclick="aceptarRecomendaciones()">
             Aceptar sugerencias
           </button>
         </div>

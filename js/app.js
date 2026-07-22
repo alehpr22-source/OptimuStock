@@ -386,9 +386,9 @@ async function cargarAlertas() {
     var urgente = diff <= 2
     return '<div class="product-item">' +
       '<div class="thumb" style="background:' + (urgente ? '#FEE2E2' : '#FEF3C7') + '">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="' + (urgente ? '#DC2626' : '#D97706') + '" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="' + (urgente ? '#E24C4C' : '#F5A623') + '" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>' +
       '<div class="info"><div class="name">' + p.nombre + '</div>' +
-        '<div class="detail" style="color:' + (urgente ? '#DC2626' : '#D97706') + ';font-weight:600">Vence: ' + fecha.toLocaleDateString('es-PE') + ' ' + (urgente ? '(URGENTE)' : '(en ' + diff + ' días)') + '</div></div>' +
+        '<div class="detail" style="color:' + (urgente ? '#E24C4C' : '#F5A623') + ';font-weight:600">Vence: ' + fecha.toLocaleDateString('es-PE') + ' ' + (urgente ? '(URGENTE)' : '(en ' + diff + ' días)') + '</div></div>' +
       '<div class="stock-info"><div class="num">' + p.stock_actual + '</div><div class="min">Stock</div></div>' +
     '</div>'
   }).join('')

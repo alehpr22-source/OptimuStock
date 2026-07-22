@@ -1,14 +1,14 @@
 :root {
-  --primary-blue: #0047AB;
-  --brand-teal: #16A34A;
-  --brand-orange: #FBBF24;
-  --success-green: #10B981;
-  --alert-red: #DC2626;
-  --background-white: #FFFFFF;
-  --text-dark: #1F2937;
-  --text-light: #6B7280;
-  --border-color: #E5E7EB;
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --primary-blue: #1E3A5F;
+  --brand-teal: #2FA88C;
+  --brand-orange: #F5A623;
+  --success-green: #2FA88C;
+  --alert-red: #E24C4C;
+  --background-white: #F8FAFC;
+  --text-dark: #1E293B;
+  --text-light: #64748B;
+  --border-color: #E2E8F0;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 * {
@@ -249,7 +249,7 @@ header span.sub {
   font-size: 15px;
   outline: none;
   color: var(--text-dark);
-  background: #FAFAFA;
+  background: #F1F5F9;
 }
 
 .login-field input:focus {
@@ -337,12 +337,12 @@ header span.sub {
   grid-column: 1 / -1;
 }
 
-.icon-blue { background: #E8F0FE; }
+.icon-blue { background: #DBEAFE; }
 .icon-blue svg { stroke: var(--primary-blue); }
-.icon-green { background: #E6F7E6; }
+.icon-green { background: #D1FAE5; }
 .icon-green svg { stroke: var(--brand-teal); }
 .icon-orange { background: #FEF3C7; }
-.icon-orange svg { stroke: #D97706; }
+.icon-orange svg { stroke: var(--brand-orange); }
 .icon-red { background: #FEE2E2; }
 .icon-red svg { stroke: var(--alert-red); }
 
@@ -355,7 +355,7 @@ header span.sub {
 }
 
 .badge-ok {
-  background: #DCFCE7;
+  background: #D1FAE5;
   color: var(--brand-teal);
 }
 
@@ -415,7 +415,7 @@ header span.sub {
 .search-box {
   display: flex;
   align-items: center;
-  background: #F3F4F6;
+  background: #F1F5F9;
   border-radius: 12px;
   padding: 0 12px;
   margin-bottom: 12px;
@@ -482,7 +482,7 @@ header span.sub {
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background: #F3F4F6;
+  background: #F1F5F9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -665,7 +665,7 @@ header span.sub {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: #E8F0FE;
+  background: #DBEAFE;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -826,14 +826,14 @@ header span.sub {
 }
 
 .search-dropdown .sd-item:active {
-  background: #F3F4F6;
+  background: #F1F5F9;
 }
 
 .search-dropdown .sd-item .sd-icon {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #F3F4F6;
+  background: #F1F5F9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -926,7 +926,7 @@ header span.sub {
   font-size: 14px;
   outline: none;
   color: var(--text-dark);
-  background: #FAFAFA;
+  background: #F1F5F9;
 }
 
 .modal-content input:focus,
@@ -966,7 +966,7 @@ header span.sub {
 }
 
 .add-btn:active {
-  background: #E8F0FE;
+  background: #DBEAFE;
 }
 
 /* === RECOMENDACIONES === */
@@ -987,7 +987,7 @@ header span.sub {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #E8F0FE;
+  background: #FEF3C7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -997,7 +997,7 @@ header span.sub {
 .recomendacion-item .ri-icon svg {
   width: 22px;
   height: 22px;
-  stroke: var(--primary-blue);
+  stroke: var(--brand-orange);
 }
 
 .recomendacion-item .ri-info {
@@ -1018,8 +1018,8 @@ header span.sub {
 .recomendacion-item .ri-badge {
   font-size: 12px;
   font-weight: 600;
-  color: var(--primary-blue);
-  background: #E8F0FE;
+  color: var(--brand-orange);
+  background: #FEF3C7;
   padding: 4px 10px;
   border-radius: 10px;
 }
@@ -1053,7 +1053,7 @@ header span.sub {
   color: var(--text-light);
   margin-bottom: 16px;
   padding: 10px 14px;
-  background: #F3F4F6;
+  background: #F1F5F9;
   border-radius: 10px;
 }
 

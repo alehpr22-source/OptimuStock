@@ -249,6 +249,13 @@ function quitarDelCarrito(idx) {
   renderCarrito()
 }
 
+function vaciarCarrito() {
+  if (!carrito.length) return
+  carrito = []
+  renderCarrito()
+  mostrarToast('Carrito vaciado', 'info')
+}
+
 async function guardarVenta() {
   if (!carrito.length) { mostrarToast('Agrega productos al carrito', 'error'); return }
   var btn = document.getElementById('vbb-guardar')

@@ -797,6 +797,21 @@ header span.sub {
   display: block;
 }
 
+.ventas-bottom-bar .btn-cancel {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ventas-bottom-bar .btn-cancel:active {
+  background: rgba(255,255,255,0.22);
+}
+
 .ventas-bottom-bar .btn {
   width: auto;
   padding: 10px 20px;

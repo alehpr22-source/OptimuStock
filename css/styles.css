@@ -660,20 +660,32 @@ header span.sub {
 }
 
 .carrito-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
   background: white;
   border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow);
+  padding: 12px;
+}
+
+.carrito-item .ci-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.carrito-item .ci-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
 }
 
 .carrito-item .ci-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
   background: #fff;
   border: 1px solid var(--border-color);
   display: flex;
@@ -689,8 +701,8 @@ header span.sub {
 }
 
 .carrito-item .ci-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   stroke: var(--primary-blue);
 }
 
@@ -700,7 +712,7 @@ header span.sub {
 }
 
 .carrito-item .ci-info .ci-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -708,8 +720,9 @@ header span.sub {
 }
 
 .carrito-item .ci-info .ci-price {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-light);
+  margin-top: 2px;
 }
 
 .carrito-item .ci-qty {
@@ -720,13 +733,13 @@ header span.sub {
 }
 
 .carrito-item .ci-qty button {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   border: 1.5px solid var(--primary-blue);
   background: white;
   color: var(--primary-blue);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -741,21 +754,14 @@ header span.sub {
   color: white;
 }
 
-.carrito-item .ci-qty .ci-num {
-  font-size: 14px;
-  font-weight: 700;
-  min-width: 22px;
-  text-align: center;
-}
-
 .carrito-item .ci-qty .ci-input {
-  width: 32px;
+  width: 36px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 2px;
+  padding: 4px 2px;
   background: #fff;
   outline: none;
   -moz-appearance: textfield;
@@ -767,25 +773,25 @@ header span.sub {
 }
 
 .carrito-item .ci-subtotal {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
-  min-width: 52px;
+  min-width: 56px;
   text-align: right;
   flex-shrink: 0;
 }
 
 .carrito-item .ci-remove {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border: none;
   background: #FEE2E2;
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--alert-red);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -795,51 +801,62 @@ header span.sub {
 .ventas-bottom-bar {
   flex-shrink: 0;
   background: var(--primary-blue);
-  padding: 12px 16px;
+  padding: 16px 20px;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ventas-bottom-bar .vbb-row {
+  display: flex;
 }
 
 .ventas-bottom-bar .vbb-info {
-  flex: 1;
+  flex-direction: column;
+  align-items: center;
   color: white;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
 .ventas-bottom-bar .vbb-info span {
-  font-size: 12px;
+  font-size: 13px;
   opacity: 0.85;
 }
 
 .ventas-bottom-bar .vbb-info strong {
-  font-size: 18px;
-  display: block;
+  font-size: 20px;
+}
+
+.ventas-bottom-bar .vbb-actions {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 
 .ventas-bottom-bar .btn-cancel {
   background: rgba(255,255,255,0.12);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.25);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .ventas-bottom-bar .btn-cancel:active {
   background: rgba(255,255,255,0.22);
 }
 
 .ventas-bottom-bar .btn {
-  width: auto;
-  padding: 10px 20px;
-  font-size: 14px;
-  flex-shrink: 0;
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 /* === SEARCH DROPDOWN === */

@@ -223,15 +223,19 @@ function renderCarrito() {
     var icon = i.imagen_url
       ? '<div class="ci-icon" style="overflow:hidden"><img src="' + i.imagen_url + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
       : '<div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>'
-    return '<div class="carrito-item">' + icon +
-      '<div class="ci-info"><div class="ci-name">' + i.nombre + '</div><div class="ci-price">S/ ' + Number(i.precio).toFixed(2) + '</div></div>' +
-      '<div class="ci-qty">' +
-        '<button onclick="cambiarQtyCarrito(' + idx + ',-1)">−</button>' +
-        '<input type="number" class="ci-input" value="' + i.cantidad + '" min="1" max="' + i.stock_actual + '" onchange="actualizarQtyCarrito(' + idx + ',this.value)">' +
-        '<button onclick="cambiarQtyCarrito(' + idx + ',1)">+</button>' +
+    return '<div class="carrito-item">' +
+      '<div class="ci-top">' + icon +
+        '<div class="ci-info"><div class="ci-name">' + i.nombre + '</div><div class="ci-price">S/ ' + Number(i.precio).toFixed(2) + ' c/u</div></div>' +
       '</div>' +
-      '<span class="ci-subtotal">S/ ' + subtotal.toFixed(2) + '</span>' +
-      '<button class="ci-remove" onclick="quitarDelCarrito(' + idx + ')">×</button>' +
+      '<div class="ci-bottom">' +
+        '<div class="ci-qty">' +
+          '<button onclick="cambiarQtyCarrito(' + idx + ',-1)">−</button>' +
+          '<input type="number" class="ci-input" value="' + i.cantidad + '" min="1" max="' + i.stock_actual + '" onchange="actualizarQtyCarrito(' + idx + ',this.value)">' +
+          '<button onclick="cambiarQtyCarrito(' + idx + ',1)">+</button>' +
+        '</div>' +
+        '<span class="ci-subtotal">S/ ' + subtotal.toFixed(2) + '</span>' +
+        '<button class="ci-remove" onclick="quitarDelCarrito(' + idx + ')">×</button>' +
+      '</div>' +
     '</div>'
   }).join('')
 

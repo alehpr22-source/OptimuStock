@@ -152,13 +152,7 @@ header span.sub {
   stroke: var(--primary-blue);
 }
 
-.nav-item svg.icon-alerta-active {
-  stroke: var(--alert-red) !important;
-}
 
-.nav-item svg.icon-recomendacion-active {
-  stroke: var(--brand-orange) !important;
-}
 
 .splash {
   position: absolute;

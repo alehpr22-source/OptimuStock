@@ -60,6 +60,7 @@ function navigateTo(section) {
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active') })
   var navItem = document.querySelector('.nav-item[data-section="' + section + '"]')
   if (navItem) navItem.classList.add('active')
+  actualizarNavIcons()
   if (document.getElementById('content')) document.getElementById('content').scrollTop = 0
   if (section === 'ventas') {
     document.getElementById('ventas-search').focus()
@@ -397,7 +398,7 @@ async function cargarAlertas() {
   } catch (_) { items = [] }
   alertasData = items
   document.getElementById('alerta-count').textContent = items.length
-  document.getElementById('icon-alertas').classList.toggle('icon-alerta-active', items.length > 0)
+  actualizarNavIcons()
 
   var container = document.getElementById('alertas-lista')
   container.className = 'product-list'
@@ -437,7 +438,7 @@ async function cargarRecomendaciones() {
     items = await get('/recomendaciones?select=*,productos:producto_id(nombre,imagen_url)&vigente=eq.true&bodega_id=eq.' + getBodegaId())
   } catch (_) { items = [] }
   recomendacionesData = items
-  document.getElementById('icon-recomendaciones').classList.toggle('icon-recomendacion-active', items.length > 0)
+  actualizarNavIcons()
 
   var container = document.getElementById('recomendaciones-lista')
   var btn = document.getElementById('btn-aceptar-rec')
@@ -476,6 +477,31 @@ async function aceptarRecomendaciones() {
   }
   btn.disabled = false
   btn.textContent = 'Aceptar sugerencias'
+}
+
+// === ACTUALIZAR COLOR NAV ICONS ===
+
+function actualizarNavIcons() {
+  var secciones = [
+    { id: 'nav-alertas', data: alertasData, color: '#E24C4C' },
+    { id: 'nav-recomendaciones', data: recomendacionesData, color: '#F5A623' },
+  ]
+  secciones.forEach(function(s) {
+    var btn = document.getElementById(s.id)
+    if (!btn) return
+    var svg = btn.querySelector('svg')
+    var span = btn.querySelector('span')
+    if (btn.classList.contains('active')) {
+      if (svg) svg.style.stroke = ''
+      if (span) span.style.color = ''
+    } else if (s.data && s.data.length > 0) {
+      if (svg) svg.style.stroke = s.color
+      if (span) span.style.color = s.color
+    } else {
+      if (svg) svg.style.stroke = ''
+      if (span) span.style.color = ''
+    }
+  })
 }
 
 // === CERRAR DROPDOWN AL HACER CLICK FUERA ===

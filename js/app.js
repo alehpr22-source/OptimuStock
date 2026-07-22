@@ -468,12 +468,15 @@ async function cargarRecomendaciones() {
 
 async function aceptarRecomendaciones() {
   var btn = document.getElementById('btn-aceptar-rec')
+  var container = document.getElementById('recomendaciones-lista')
   btn.disabled = true
   btn.textContent = 'Aceptando...'
   try {
     await patch('/recomendaciones?vigente=eq.true&bodega_id=eq.' + getBodegaId(), { vigente: false })
     mostrarToast('Sugerencias aceptadas', 'success')
-    cargarRecomendaciones()
+    container.innerHTML = '<div class="rec-success"><div class="rec-check">✓</div><p>¡Sugerencias aplicadas!</p></div>'
+    btn.style.display = 'none'
+    setTimeout(function() { cargarRecomendaciones() }, 1500)
   } catch (_) {
     mostrarToast('Error al aceptar sugerencias', 'error')
   }

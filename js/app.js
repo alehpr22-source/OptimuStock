@@ -23,6 +23,8 @@ function iniciarApp() {
   cargarDashboard()
   cargarCategorias()
   cargarCategoriasSelect()
+  cargarAlertas()
+  cargarRecomendaciones()
   lucide.createIcons()
 }
 
